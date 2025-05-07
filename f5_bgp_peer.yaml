@@ -1,0 +1,10 @@
+apiVersion: metallb.io/v1beta2
+kind: BGPPeer
+metadata:
+  name: f5-bgp-peer
+  namespace: metallb-system
+spec:
+  peerAddress: 192.168.2.1     # IP of the F5 (or upstream BGP router)
+  peerASN: 65001           	# ASN of the F5 BGP speaker
+  myASN: 64512             	# ASN assigned to MetalLB
+  #ebgpMultihop: true       #To set if the BGPPeer is multi-hops away. Needed for FRR mode only.

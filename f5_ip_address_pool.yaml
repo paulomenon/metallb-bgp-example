@@ -1,0 +1,10 @@
+apiVersion: metallb.io/v1beta1
+kind: IPAddressPool
+metadata:
+  name: f5-ip-pool
+  namespace: metallb-system
+spec:
+  addresses:
+    - 192.168.2.10-192.168.2.50 	# A pool of IPs you want MetalLB to assign
+  autoAssign: true                # MetalLB will automatically assign IPs from this range
+  avoidBuggyIPs: false            # BGP for routing IPs to your network

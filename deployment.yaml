@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: envoy
+  namespace: rhcl-sandbox
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: envoy
+  template:
+    metadata:
+      labels:
+        app: envoy
+    spec:
+      containers:
+        - name: envoy
+          image: envoyproxy/envoy:v1.25-latest
+          ports:
+            - containerPort: 8080
+            - containerPort: 8443
+          volumeMounts:
+            - name: config
+              mountPath: /etc/envoy
+      volumes:
+        - name: config
+          configMap:
+            name: envoy-config
