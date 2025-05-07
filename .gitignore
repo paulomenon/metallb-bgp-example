@@ -1,0 +1,36 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+._*
+.Spotlight-V100
+.Trashes
+.VolumeIcon.icns
+.fseventsd
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+*.lnk
+
+# Linux
+*~
+.nfs*
+
+# Editor swap/backup files (optional but useful)
+*.swp
+*.swo
+*.bak
+*.tmp
+
+# Logs
+*.log
+
+# ignore for VS Code or JetBrains IDEs
+.vscode/
+.idea/
+
+
