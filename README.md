@@ -88,20 +88,22 @@ Application Pod
 
 ## 🔐 Sample Configurations
 
-### `ipaddresspool.yaml`
+### `f5_ip_address_pool.yaml`
 
 ```yaml
 apiVersion: metallb.io/v1beta1
 kind: IPAddressPool
 metadata:
-  name: bgp-pool
+  name: f5-ip-pool
   namespace: metallb-system
 spec:
   addresses:
-    - 192.168.100.240-192.168.100.250
+    - 192.168.2.10-192.168.2.50 	# A pool of IPs you want MetalLB to assign
+  autoAssign: true                # MetalLB will automatically assign IPs from this range
+  avoidBuggyIPs: false            # BGP for routing IPs to your network
 ```
 
-### `bgp-peer.yaml`
+### `f5_bgp_peer.yaml`
 
 ```yaml
 apiVersion: metallb.io/v1beta1
@@ -114,19 +116,36 @@ spec:
   peerASN: 64501
   peerAddress: 192.168.100.1
 ```
-
-### `bgp-advertisement.yaml`
+### `bgp_peer_failover.yaml`
 
 ```yaml
-apiVersion: metallb.io/v1beta1
-kind: BGPAdvertisement
+apiVersion: metallb.io/v1beta2
+kind: BGPPeer
 metadata:
-  name: bgp-ad
+  name: f5-bgp-peer
+  namespace: metallb-system
+spec:
+  peerAddress: 192.168.2.1     # IP of the F5 (or upstream BGP router)
+  peerASN: 65001           	# ASN of the F5 BGP speaker
+  myASN: 64512             	# ASN assigned to MetalLB
+  bfdprofile: default  # Optional: BFD profile for fast failure detection
+```
+
+### `f5_bgp_advertisement.yaml`
+
+```yaml
+kind: BGPAdvertisement
+apiVersion: metallb.io/v1beta1
+metadata:
+  name: advertise-bgp-pool
   namespace: metallb-system
 spec:
   ipAddressPools:
-    - bgp-pool
+  - f5-ip-pool
 ```
+
+### `f5_L2_advertisement.yaml`
+This is optional and not used in this configuration, as the setup is designed for Layer 3 external load balancing.
 
 ---
 
