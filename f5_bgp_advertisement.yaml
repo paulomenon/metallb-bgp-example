@@ -1,0 +1,8 @@
+kind: BGPAdvertisement
+apiVersion: metallb.io/v1beta1
+metadata:
+  name: advertise-bgp-pool
+  namespace: metallb-system
+spec:
+  ipAddressPools:
+  - f5-ip-pool
